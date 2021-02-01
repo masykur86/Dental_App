@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Dental App</string>
     <string name="facebook_app_id">135792161709232</string> <string name="fb_login_protocol_scheme">fb135792161709232</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="keDaftar">Belum Punya Akun? Daftar Disini</string>
+    <string name="confrim_password">Confrim Password</string>
 
 </resources>

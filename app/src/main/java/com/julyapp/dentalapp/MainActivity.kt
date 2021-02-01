@@ -7,10 +7,13 @@ import android.util.Log
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.Login
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.julyapp.dentalapp.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -23,33 +26,37 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         // Initialize Facebook Login button
+        supportActionBar?.hide()
         auth = FirebaseAuth.getInstance()
 
-        binding.loginButton.setReadPermissions("email", "public_profile")
-        binding.loginButton.registerCallback(callbackManager, object :
+        binding.Fblogin.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"))
+            LoginManager.getInstance().registerCallback(callbackManager, object :
                 FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                Log.d(TAG, "facebook:onSuccess:$loginResult")
-                handleFacebookAccessToken(loginResult.accessToken)
-            }
+                override fun onSuccess(loginResult: LoginResult) {
+                    Log.d(TAG, "facebook:onSuccess:$loginResult")
 
-            override fun onCancel() {
-                Log.d(TAG, "facebook:onCancel")
-                // ...
-            }
+                    handleFacebookAccessToken(loginResult.accessToken)
+                }
 
-            override fun onError(error: FacebookException) {
-                Log.d(TAG, "facebook:onError", error)
-                // ...
-            }
-        })
+                override fun onCancel() {
+                    Log.d(TAG, "facebook:onCancel")
+                    // ...
+                }
+
+                override fun onError(error: FacebookException) {
+                    Log.d(TAG, "facebook:onError", error)
+                    // ...
+                }
+            })
+
+        }
+
 
 
     }
