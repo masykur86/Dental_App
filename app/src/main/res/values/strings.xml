@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dental App</string>
+    <string name="facebook_app_id">135792161709232</string> <string name="fb_login_protocol_scheme">fb135792161709232</string>
+
 </resources>
